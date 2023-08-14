@@ -29,6 +29,15 @@ app.post('/posts/api',async (req,res) => {
     // res.redirect('/');
 })
 
+app.get('/posts/api', async (req,res) => {
+    try{
+        const comments = await Comments.find(); 
+        res.json(comments);
+    } catch (err){
+        res.status(500).send("Error retrieving comments");
+    }
+})
+
 
 app.listen(port,()=>{
     console.log(`Server Running on port ${port}`)

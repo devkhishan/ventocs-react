@@ -1,7 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
+interface Comment{
+    comment: String;
+}
 function Thread() {
     const [post, setPost] = useState('');
+    const [comments,setComments] = useState<Comment[]>([]);
+   
+    async function fetchComments(){
+        try{
+            const response = await fetch('http://localhost:3001/posts/api');
+            if (response.ok){
+                const commentsData = await response.json();
+                setComments(commentsData);
+            }
+        } catch(err){
+            console.error(err);
+        }
+
+    }
+
+    useEffect(()=>{
+        fetchComments();
+    },[]);
 
     async function AddPost() {
         try {
@@ -23,10 +44,12 @@ function Thread() {
         } catch (err) {
             console.error(err);
         }
+    await fetchComments();
     }
 
     return (
         <>
+        
             <section className="thread">
                 <div className="comments-container">
                     <input
@@ -37,8 +60,30 @@ function Thread() {
                     ></input>
                     <button id="submit-btn" onClick={AddPost}>Submit Comment</button>
                 </div>
-                <ul id="comments-list" className="comments-list"></ul>
+                <div className="comments-list">
+                    
+                    {comments.slice().reverse().map((comment, index) => (
+                        <div key={index} className="comment">
+                            <div className="user">Username</div>
+                            <div className="likes">
+                                <button type="button">Like</button>
+                                <button type="button">Dislike</button>
+                            </div>
+                            <div className="post-comment">
+                            {comment.comment}
+                            </div>
+                            <div className="reply-comment">
+                                <button 
+                                    type="button"
+                                    className='reply-btn'
+                                    >Reply</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </section>
+            
+        
         </>
     );
 }
