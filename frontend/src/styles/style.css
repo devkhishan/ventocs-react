@@ -152,7 +152,7 @@ hr{
     margin: 10px;
     border: 2px solid black;
   }
-  .post-comment{
+  .post-comment, .post-reply{
     border:2px solid black;
     margin: 5px;
     padding: 5px;
@@ -166,4 +166,9 @@ hr{
     border: 2px solid black;
     margin: 5px;
     padding: 5px;
+}
+.reply-box{
+    margin: 10px;
+    margin-left: 50px;
+    border: solid 2px orange;
 }

@@ -2,15 +2,11 @@ const mongoose = require('mongoose');
 
 const replySchema = new mongoose.Schema({
     comment: String,
-    username: String,
-    likes: Number, 
     nestedReplies: [this]
 })
 const commentSchema = new mongoose.Schema({
     comment: String,
-    username: String, 
-    likes: Number,
-    nestedReplies: [replySchema]
+    replies: [String]
 })
 
 

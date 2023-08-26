@@ -1,6 +1,7 @@
 const express = require('express'); 
 const mongoose = require('mongoose'); 
 const cors = require('cors');
+const axios = require('axios')
 const Comments = require('./model')
 
 const app = express(); 
@@ -16,18 +17,35 @@ mongoose.connect('mongodb://localhost:27017/mydbs',{
 })
 
 app.post('/posts/api',async (req,res) => {
-    const {post} = req.body;
-    const newPost = new Comments({
-        comment: post
-    })
+    const {post,commentId,replyPost} = req.body;
+    console.log(commentId);
+    console.log(replyPost);
+    console.log(post);
     try{
-        await newPost.save(); 
-        res.status(201).send('Comment added to Mongo'); 
+        if(commentId!==''){
+            const parent = await Comments.findById(commentId);
+            parent.replies.push(replyPost);
+            await parent.save();
+            res.status(201).send('Reply added to Mongo');
+        }
+        
+        else{
+            const newPost = new Comments({
+                comment: post,
+            })
+            await newPost.save();
+            res.status(201).send('Comment added to Mongo');
+        }
+      
+         
     } catch(err){
         res.status(500).send('Error adding comment to Mongo')
     }
-    // res.redirect('/');
+    
 })
+
+
+
 
 app.get('/posts/api', async (req,res) => {
     try{
