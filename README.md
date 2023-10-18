@@ -1,4 +1,4 @@
 # ventocs-react
 ## Test for Interaction 
 
-Day 2 of interaction through Readme I think so
+I have updated the readme yesterday but I have forgotten to complete the leetcode change, I lost my streak 😢
