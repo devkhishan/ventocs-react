@@ -9,7 +9,7 @@ const port = 3001;
 app.use(cors()); 
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/mydbs',{
+mongoose.connect('mongodb+srv://devoffic:Avalanche$2020@cluster0.cull4zc.mongodb.net/?retryWrites=true&w=majority',{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(()=>{
@@ -20,7 +20,7 @@ app.post('/posts/api',async (req,res) => {
     const {post,commentId,replyPost} = req.body;
     console.log(commentId);
     console.log(replyPost);
-    console.log(post);
+    
     try{
         if(commentId!==''){
             const parent = await Comments.findById(commentId);
@@ -49,7 +49,7 @@ app.post('/posts/api',async (req,res) => {
 
 app.get('/posts/api', async (req,res) => {
     try{
-        const comments = await Comments.find(); 
+        const comments = await Comments.find();  
         res.json(comments);
     } catch (err){
         res.status(500).send("Error retrieving comments");
