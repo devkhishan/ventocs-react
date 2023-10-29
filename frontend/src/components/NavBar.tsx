@@ -1,12 +1,15 @@
+
+
+
 function NavBar(){
     return (
         <>
         <section className="navbar">
             <div className="btn">
-                <button className="nbtn">Forum</button>
-                <button className="nbtn">Collections</button>
-                <button className="nbtn">Questions</button>
-                <button className="nbtn">Users</button>
+                <a href="/" className='nbtn'>Forum</a>
+                <a href="/collections" className="nbtn">Collections</a>
+                {/* <a href="/Questions" className="nbtn">Questions</a>
+                <a href="/Users" className="nbtn">Users</a> */}
             </div>
         </section>
         </>

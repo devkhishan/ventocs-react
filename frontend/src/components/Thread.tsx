@@ -4,6 +4,7 @@ interface Comment{
     _id: string;
     comment: String;
     replies: [String];
+   
 }
 function Thread() {
     const [post, setPost] = useState('');
@@ -11,6 +12,7 @@ function Thread() {
     const [commentId,setCommentId] = useState('');
     const [comments,setComments] = useState<Comment[]>([]);
     const [switchOn,setSwitchOn] = useState(false);
+    const [subSwitchOn,setSubSwitchOn] = useState(false);
     async function fetchComments(){
         try{
             const response = await fetch('http://localhost:3001/posts/api');
@@ -74,6 +76,7 @@ function Thread() {
         }
         await fetchComments();
     }
+    
 
     const replyBox = () => {
         return(
@@ -90,6 +93,8 @@ function Thread() {
             </div>
         )
     }
+
+
     return (
         <>
         
@@ -120,7 +125,7 @@ function Thread() {
                                     type="button"
                                     className='reply-btn'
                                     onClick={()=>{
-                                        setSwitchOn(true); 
+                                        setSwitchOn(!switchOn); 
                                         setCommentId(comment._id);
                                     }
                                 }
@@ -128,7 +133,7 @@ function Thread() {
                                 {switchOn && commentId===comment._id && replyBox()}
                             </div>
                             <div className="reply">
-                                {comment.replies.slice().reverse().map((reply, replyIndex) => (
+                                {comment.replies && comment.replies.slice().reverse().map((reply, replyIndex) => (
                                     
                                     <div key={replyIndex} className="reply-box">
                                         <div className="likes">
@@ -147,7 +152,7 @@ function Thread() {
                                                     setCommentId(comment._id);
                                                 }
                                             }
-                                                >Reply</button>
+                                            >Reply</button>
                                             {switchOn && commentId===comment._id && replyBox()}
                                         </div> */}
                                         

@@ -1,13 +1,20 @@
+import Collections from './components/Collections'
 import Header from './components/Header'
 import NavBar from './components/NavBar'
 import Thread from './components/Thread'
-
+import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
 function App() {
   return (
     <>
-      <Header />
+    <Header />
       <NavBar />
-      <Thread />
+    <Router>
+      
+      <Routes>
+        <Route path="/" element={<Thread />}/>
+        <Route path="/Collections" element={<Collections />} />
+      </Routes>
+    </Router>
     </>
   )
 }

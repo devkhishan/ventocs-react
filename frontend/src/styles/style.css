@@ -83,12 +83,18 @@ hr{
     border-radius: 50px;
     border: 4px solid black;
     padding: 2px;
+    text-decoration: none;
+    text-align: center;
+    line-height: 30px;
+
+
 }
 
 .nbtn:hover{
     background-color: white;
     color: black;
     transition: 0.3s;
+    text-decoration: none;
 }
 
 /* Thread */ 
