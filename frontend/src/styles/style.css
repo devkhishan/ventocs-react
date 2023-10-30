@@ -57,6 +57,7 @@ hr{
     padding: 2px;
 }
 
+
 #connect-btn:hover{
     background-color:white;
     color:black;
@@ -98,7 +99,7 @@ hr{
 }
 
 /* Thread */ 
-.thread{
+.bodycontainer{
  
     padding: 30px;
     margin: auto;

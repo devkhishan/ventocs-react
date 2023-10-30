@@ -98,7 +98,7 @@ function Thread() {
     return (
         <>
         
-            <section className="thread">
+            <section className="bodycontainer">
                 <div className="comments-container">
                     <input
                         id="comment-input"
