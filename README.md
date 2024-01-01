@@ -1,8 +1,3 @@
-# ventocs-react
-## Test for Interaction 
+# Ventocs 
 
-I have updated the readme yesterday but I have forgotten to complete the leetcode change, I lost my streak 😢
-**October 19** I haven't done much today, just completed the coding stuff understood something better and closing of my PC right now..
-**October 20** I have no idea what I have done today but that I have completed all the coding sessions that's it.
-**October 21** Today went outside, some homeworks and sleep - easy...
-**October 22** I have done long hours of coding and some hours of cleaning works, I feel good or untired today - and also feeling like improved somewhat on coding.
+This is a project which aims to create a reddit based threading social media with the compatibility of web3 at the backend to recieve tokens for the verified answers by the question raisers in the community and also having much larger opportunity to access the merchandise. 
