@@ -31,23 +31,30 @@ const UserForm = ({ walletAddress, onSuccess }) => {
     };
 
     return (
-        <div>
-            <h2>Complete Your Profile</h2>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-
-            <input
-                type="text"
-                placeholder="Bio"
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-            />
-
-            <button onClick={handleSubmit}>Submit</button>
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+            <div className="bg-white text-black p-6 rounded-lg shadow-lg w-1/3">
+                <h2 className="text-2xl font-bold mb-4">Complete Your Profile</h2>
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="block w-full p-2 mb-4 border border-gray-300 rounded"
+                />
+                <input
+                    type="text"
+                    placeholder="Bio"
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
+                    className="block w-full p-2 mb-4 border border-gray-300 rounded"
+                />
+                <button
+                    onClick={handleSubmit}
+                    className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                >
+                    Submit
+                </button>
+            </div>
         </div>
     );
 };

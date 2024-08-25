@@ -22,11 +22,18 @@ const Auth = () => {
         setUser(currUser.user);
     }
     return (
-        <div>
-            <Login onSuccess={handleAuthSuccess} />
-            {newUser && <UserForm walletAddress={wallet} onSuccess={handleNewUser} />}
-
-
+        <div className="bg-vintage-gray text-vintage-blue font-mono min-h-screen">
+            <nav className="flex justify-between items-center p-4 border-b border-vintage-blue bg-vintage-gray">
+                <div className="text-xl font-bold">
+                    <span className="text-lg">Ventocs</span>
+                </div>
+                <div>
+                    <Login onSuccess={handleAuthSuccess}/>
+                </div>
+            </nav>
+            <div className="flex justify-center items-center min-h-screen">
+                {newUser && <UserForm walletAddress={wallet} onSuccess={handleNewUser}/>}
+            </div>
         </div>
     );
 };

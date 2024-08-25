@@ -119,7 +119,7 @@ const Login = ({onSuccess}) => {
         <div>
             {!metamaskAvailable && <p>Please install MetaMask to use this app.</p>}
             {!connected ? (
-                <button onClick={connectMetaMask}>Connect MetaMask</button>
+                <button  onClick={connectMetaMask}>Connect MetaMask</button>
             ) : (
                 <div>
                     <p>Connected as: {account}</p>

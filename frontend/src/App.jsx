@@ -1,15 +1,13 @@
 import Auth from "./Auth.jsx";
+import Navbar from "./Navbar.jsx";
+import './styles/index.css';
 
 
 function App() {
 
   return (
     <>
-
-      <div className="header">
-          <h1>Ventocs - Developer Forum </h1>
-      </div>
-        <Auth/>
+        <Auth />
     </>
   )
 }
