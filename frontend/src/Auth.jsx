@@ -87,12 +87,13 @@ const Auth = () => {
 
     const authenticateUser = async (message, signature, account) => {
         try {
-            const response = await fetch('/api/authenticate', {
+            const response = await fetch('http://localhost:5000/api/authenticate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message, signature, account }),
             });
             const result = await response.json();
+            console.log(result);
             if (result.success) {
                 alert('Authentication successful');
             } else {
