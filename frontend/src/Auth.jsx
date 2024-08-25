@@ -6,9 +6,10 @@ const web3 = new Web3(window.ethereum);
 const Auth = () => {
     const [signature, setSignature] = useState('');
     const [account, setAccount] = useState('');
-    const [message, setMessage] = useState('Please sign this message to authenticate your identity.');
+    const [message, setMessage] = useState('');
     const [metamaskAvailable, setMetamaskAvailable] = useState(true);
     const [connected, setConnected] = useState(false);
+    const messageSigned = useRef(false); // Ref to track signing state
 
     useEffect(() => {
         const checkMetaMask = async () => {
@@ -18,14 +19,12 @@ const Auth = () => {
                     if (accounts.length > 0) {
                         setAccount(accounts[0]);
                         setConnected(true);
-                        const savedSignature = sessionStorage.getItem('signature');
-                        if (savedSignature) {
-                            setSignature(savedSignature);
-                        } else {
-                            await signMessage(accounts[0]);
-                        }
                     } else {
                         setConnected(false);
+                    }
+                    const savedSignature = sessionStorage.getItem('signature');
+                    if (savedSignature) {
+                        setSignature(savedSignature);
                     }
                 } catch (error) {
                     console.error('Error checking MetaMask connection:', error);
@@ -49,18 +48,38 @@ const Auth = () => {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             setAccount(accounts[0]);
             setConnected(true);
-            await signMessage(accounts[0]);  // Trigger signing after connection
+
         } catch (error) {
             console.error('User denied account access:', error);
         }
     };
 
-    const signMessage = async (account) => {
+    useEffect(() => {
+        if (connected && !signature) {
+            signMessage();
+
+        }
+    }, [connected]);
+
+    const generateRandomSuffix = () => {
+        return Math.random().toString(36).substring(2, 15);
+    };
+
+    const signMessage = async () => {
+        if (!connected) {
+            alert('Please connect MetaMask first.');
+            return;
+        }
+        const nonce = generateRandomSuffix();
+        const predefinedMessage = `Please sign this message to authenticate your identity. Nonce: ${nonce}`;
+        setMessage(predefinedMessage);
+
         try {
-            const signedMessage = await web3.eth.personal.sign(message, account, '');
+
+            const signedMessage = await web3.eth.personal.sign(predefinedMessage, account, "");
             setSignature(signedMessage);
             sessionStorage.setItem('signature', signedMessage);
-            await authenticateUser(message, signedMessage, account);
+            await authenticateUser(predefinedMessage, signedMessage, account);
         } catch (error) {
             console.error('Error signing message:', error);
         }
@@ -92,9 +111,7 @@ const Auth = () => {
             ) : (
                 <div>
                     <p>Connected as: {account}</p>
-                    <button onClick={() => signMessage(account)} disabled={!!signature}>
-                        {signature ? 'Already Signed' : 'Sign Predefined Message'}
-                    </button>
+                    <button onClick={signMessage} disabled={messageSigned.current}>Sign Predefined Message</button>
                 </div>
             )}
             <div>
