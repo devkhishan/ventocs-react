@@ -56,8 +56,8 @@ const Login = ({onSuccess}) => {
         try {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             setAccount(accounts[0]);
-            await setConnected(true);
-            console.log(connected);
+            setConnected(true);
+
 
         } catch (error) {
             console.error('User denied account access:', error);
@@ -71,6 +71,10 @@ const Login = ({onSuccess}) => {
     };
 
     const signMessage = async () => {
+        if(!connected){
+            alert("Please connect metamask first")
+            return
+        }
 
         const nonce = generateRandomSuffix();
         const predefinedMessage = `Please sign this message to authenticate your identity. Nonce: ${nonce}`;
@@ -80,8 +84,10 @@ const Login = ({onSuccess}) => {
 
             const signedMessage = await web3.eth.personal.sign(predefinedMessage, account, "");
             setSignature(signedMessage);
-            localStorage.setItem('walletAddress',account);
-            localStorage.setItem('signature', signedMessage);
+            if(signedMessage) {
+                localStorage.setItem('walletAddress', account);
+                localStorage.setItem('signature', signedMessage);
+            }
             await authenticateUser(predefinedMessage, signedMessage, account);
         } catch (error) {
             console.error('Error signing message:', error);
@@ -116,19 +122,34 @@ const Login = ({onSuccess}) => {
     }
 
     return (
-        <div>
-            {!metamaskAvailable && <p>Please install MetaMask to use this app.</p>}
-            {!connected ? (
-                <button  onClick={connectMetaMask}>Connect MetaMask</button>
-            ) : (
-                <div>
-                    <p>Connected as: {account}</p>
-                    <button onClick={disconnectMetamask}>Disconnect Metamask</button>
+        <div className="flex flex-col space-y-2 items-center">
+            {!metamaskAvailable && (
+                <p className="text-red-500">Please install MetaMask to use this app.</p>
+            )}
+            {!connected && (
+                <button
+                    className="bg-[#FFB000] text-black py-2 px-4 rounded-lg hover:bg-[#FFCC00] hover:text-black border border-[#FFB000] font-mono"
+                    onClick={connectMetaMask}
+                >
+                    Connect MetaMask
+                </button>
+            )}
+            {connected && (
+                <div className="flex flex-col items-center">
+                    <p className="text-sm text-[#FFB000] font-mono">Connected as: {localStorage.getItem('walletAddress')}</p>
+                    <button
+                        className="bg-[#FFB000] text-black py-2 px-4 rounded-lg hover:bg-[#FFCC00] hover:text-black border border-[#FFB000] font-mono mt-2"
+                        onClick={disconnectMetamask}
+                    >
+                        Disconnect MetaMask
+                    </button>
                 </div>
             )}
-
         </div>
     );
+
+
+
 };
 
 export default Login;

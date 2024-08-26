@@ -5,8 +5,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+
+
 const authenticate = require('./controllers/authenticate');
-const createUser = require('./controllers/createUser'); // Import createUser controller
+const createUser = require('./controllers/createUser');
+const postController = require('./controllers/postController');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,7 +27,13 @@ app.use(bodyParser.json());
 
 // Routes
 app.post('/api/authenticate', authenticate);
-app.post('/api/create-user', createUser); // Route for creating a user
+app.post('/api/create-user', createUser);
+app.post('/api/posts', postController.createPost);
+app.get('/api/posts', postController.getPosts);
+app.patch('/api/posts/:postId/upvote', postController.upvotePost);
+app.patch('/api/posts/:postId/downvote', postController.downvotePost);
+app.post('/api/posts/:postId/comments', postController.addComment);
+
 
 // Start server
 app.listen(PORT, () => {
